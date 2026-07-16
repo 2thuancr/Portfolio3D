@@ -7,9 +7,10 @@ using Volo.Abp.Guids;
 
 namespace Portfolio3D.Profiles;
 
-/* Ensures a fresh database always has exactly one Profile row for the
- * admin to edit, instead of shipping fabricated personal data. Values are
- * generic placeholders, not real identity information. */
+/* Ensures a database always has exactly one Profile row. Runs in every
+ * environment (this is the site owner's real identity, not demo content),
+ * but only ever inserts when no profile exists yet - an admin-edited or
+ * previously seeded profile is never overwritten. */
 public class ProfileDataSeedContributor : IDataSeedContributor, ITransientDependency
 {
     private readonly IRepository<Profile, Guid> _profileRepository;
@@ -33,9 +34,9 @@ public class ProfileDataSeedContributor : IDataSeedContributor, ITransientDepend
         await _profileRepository.InsertAsync(
             new Profile(
                 _guidGenerator.Create(),
-                "Your Name",
+                "Vi Quốc Thuận",
                 "Software Engineer",
-                "Write a short bio to introduce yourself."
+                "Software engineer focused on building modern, maintainable web applications with .NET, Angular and ABP Framework."
             )
         );
     }

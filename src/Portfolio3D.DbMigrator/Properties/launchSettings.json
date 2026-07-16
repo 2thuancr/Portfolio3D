@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Portfolio3D.DbMigrator": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}

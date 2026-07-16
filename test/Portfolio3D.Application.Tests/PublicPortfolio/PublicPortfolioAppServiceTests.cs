@@ -19,6 +19,7 @@ public abstract class PublicPortfolioAppServiceTests<TStartupModule> : Portfolio
     private readonly ISkillAppService _skillAppService;
     private readonly IProfileAppService _profileAppService;
     private readonly IRepository<Profile, Guid> _profileRepository;
+    private readonly IRepository<Skill, Guid> _skillRepository;
 
     protected PublicPortfolioAppServiceTests()
     {
@@ -27,6 +28,7 @@ public abstract class PublicPortfolioAppServiceTests<TStartupModule> : Portfolio
         _skillAppService = GetRequiredService<ISkillAppService>();
         _profileAppService = GetRequiredService<IProfileAppService>();
         _profileRepository = GetRequiredService<IRepository<Profile, Guid>>();
+        _skillRepository = GetRequiredService<IRepository<Skill, Guid>>();
     }
 
     private static CreateProjectDto CreateValidInput(string slug, int displayOrder = 0, bool isFeatured = false)
@@ -100,8 +102,14 @@ public abstract class PublicPortfolioAppServiceTests<TStartupModule> : Portfolio
     }
 
     [Fact]
-    public async Task SkillGroups_Should_Be_Empty()
+    public async Task SkillGroups_Should_Be_Empty_When_No_Skill_Exists_In_Database()
     {
+        var existingSkills = await _skillRepository.GetListAsync();
+        foreach (var skill in existingSkills)
+        {
+            await _skillRepository.HardDeleteAsync(skill);
+        }
+
         var result = await _publicPortfolioAppService.GetAsync();
 
         result.SkillGroups.ShouldBeEmpty();

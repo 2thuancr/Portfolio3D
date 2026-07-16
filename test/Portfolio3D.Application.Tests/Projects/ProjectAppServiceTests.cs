@@ -26,11 +26,11 @@ public abstract class ProjectAppServiceTests<TStartupModule> : Portfolio3DApplic
         _dataFilter = GetRequiredService<IDataFilter>();
     }
 
-    private static CreateProjectDto CreateValidInput(string slug = "vievent", int displayOrder = 0)
+    private static CreateProjectDto CreateValidInput(string slug = "test-project", int displayOrder = 0)
     {
         return new CreateProjectDto
         {
-            Name = "Vievent",
+            Name = "Test Project",
             Slug = slug,
             Summary = "An event management platform.",
             ThumbnailUrl = "https://example.com/thumbnail.png",
@@ -44,7 +44,7 @@ public abstract class ProjectAppServiceTests<TStartupModule> : Portfolio3DApplic
         var dto = await _projectAppService.CreateAsync(CreateValidInput());
 
         dto.Id.ShouldNotBe(Guid.Empty);
-        dto.Slug.ShouldBe("vievent");
+        dto.Slug.ShouldBe("test-project");
         dto.IsPublished.ShouldBeFalse();
     }
 
