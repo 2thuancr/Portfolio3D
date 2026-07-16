@@ -13,5 +13,7 @@ public class Portfolio3DApplicationAutoMapperProfile : Profile
 
         CreateMap<Project, ProjectDto>();
         CreateMap<Project, ProjectListDto>();
+        CreateMap<Project, ProjectPublicListDto>();
+        CreateMap<Project, ProjectPublicDetailDto>();
     }
 }

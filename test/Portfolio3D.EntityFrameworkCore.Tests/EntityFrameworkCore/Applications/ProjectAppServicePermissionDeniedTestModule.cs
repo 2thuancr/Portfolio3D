@@ -7,9 +7,11 @@ using Volo.Abp.Modularity;
 
 namespace Portfolio3D.EntityFrameworkCore.Applications;
 
-/* Reverts the AlwaysAllowAuthorization stub (added by Portfolio3DTestBaseModule for
- * convenience in other tests) back to the real authorization pipeline, so that
- * permission enforcement on IProjectAppService can be verified end-to-end. */
+// The shared test module enables AlwaysAllowAuthorization.
+// This module restores ABP's real authorization pipeline
+// for permission-denied integration tests.
+// Reuse this module for future permission-denied tests instead of
+// creating a new one per feature.
 [DependsOn(typeof(Portfolio3DEntityFrameworkCoreTestModule))]
 public class ProjectAppServicePermissionDeniedTestModule : AbpModule
 {
