@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Portfolio3D.Projects;
+using Portfolio3D.Skills;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
 using Volo.Abp.BlobStoring.Database.EntityFrameworkCore;
@@ -29,6 +30,7 @@ public class Portfolio3DDbContext :
     /* Add DbSet properties for your Aggregate Roots / Entities here. */
 
     public DbSet<Project> Projects { get; set; }
+    public DbSet<Skill> Skills { get; set; }
 
     #region Entities from the modules
 
@@ -98,6 +100,20 @@ public class Portfolio3DDbContext :
 
             b.HasIndex(x => x.Slug).IsUnique();
             b.HasIndex(x => new { x.IsPublished, x.DisplayOrder });
+        });
+
+        builder.Entity<Skill>(b =>
+        {
+            b.ToTable(Portfolio3DConsts.DbTablePrefix + "Skills", Portfolio3DConsts.DbSchema);
+            b.ConfigureByConvention(); //auto configure for the base class props
+
+            b.Property(x => x.Name).IsRequired().HasMaxLength(SkillConsts.MaxNameLength);
+            b.Property(x => x.Category).IsRequired().HasMaxLength(SkillConsts.MaxCategoryLength);
+            b.Property(x => x.IconUrl).HasMaxLength(SkillConsts.MaxIconUrlLength);
+            b.Property(x => x.LevelLabel).HasMaxLength(SkillConsts.MaxLevelLabelLength);
+
+            b.HasIndex(x => new { x.IsPublished, x.DisplayOrder });
+            b.HasIndex(x => x.Category);
         });
     }
 }

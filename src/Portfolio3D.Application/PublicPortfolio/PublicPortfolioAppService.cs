@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Options;
 using Portfolio3D.Projects;
+using Portfolio3D.Skills;
 using Volo.Abp.Domain.Repositories;
 
 namespace Portfolio3D.PublicPortfolio;
@@ -15,13 +16,16 @@ public class PublicPortfolioAppService : Portfolio3DAppService, IPublicPortfolio
     private const int MaxFeaturedProjects = 6;
 
     private readonly IRepository<Project, Guid> _projectRepository;
+    private readonly IRepository<Skill, Guid> _skillRepository;
     private readonly PortfolioProfileOptions _profileOptions;
 
     public PublicPortfolioAppService(
         IRepository<Project, Guid> projectRepository,
+        IRepository<Skill, Guid> skillRepository,
         IOptions<PortfolioProfileOptions> profileOptions)
     {
         _projectRepository = projectRepository;
+        _skillRepository = skillRepository;
         _profileOptions = profileOptions.Value;
     }
 
@@ -31,7 +35,7 @@ public class PublicPortfolioAppService : Portfolio3DAppService, IPublicPortfolio
         {
             Profile = MapProfile(),
             FeaturedProjects = await GetFeaturedProjectsAsync(),
-            SkillGroups = GetSkillGroups()
+            SkillGroups = await GetSkillGroupsAsync()
         };
     }
 
@@ -76,11 +80,36 @@ public class PublicPortfolioAppService : Portfolio3DAppService, IPublicPortfolio
         return ObjectMapper.Map<List<Project>, List<ProjectPublicListDto>>(projects);
     }
 
-    private static List<SkillGroupPublicDto> GetSkillGroups()
+    private async Task<List<SkillGroupPublicDto>> GetSkillGroupsAsync()
     {
-        /* Skill entity/CRUD is out of scope for Task 005. Returning an empty,
-         * strongly-typed list keeps the contract stable for Angular while
-         * avoiding hard-coded skill data in this service. */
-        return new List<SkillGroupPublicDto>();
+        var queryable = await _skillRepository.GetQueryableAsync();
+
+        /* Items are ordered before grouping so that:
+         *  - items within a group already follow DisplayOrder ASC, CreationTime ASC;
+         *  - groups appear in the order their first (lowest-order) item occurs,
+         *    since Enumerable.GroupBy preserves first-occurrence key order.
+         * This keeps group order deterministic without hard-coding any category. */
+        var skills = await AsyncExecuter.ToListAsync(
+            queryable
+                .Where(s => s.IsPublished)
+                .OrderBy(s => s.DisplayOrder)
+                .ThenBy(s => s.CreationTime)
+        );
+
+        return skills
+            .GroupBy(s => s.Category)
+            .Select(group => new SkillGroupPublicDto
+            {
+                Category = group.Key,
+                Items = group
+                    .Select(s => new SkillPublicDto
+                    {
+                        Name = s.Name,
+                        IconUrl = s.IconUrl,
+                        LevelLabel = s.LevelLabel
+                    })
+                    .ToList()
+            })
+            .ToList();
     }
 }

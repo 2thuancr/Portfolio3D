@@ -9,4 +9,9 @@ public static class Portfolio3DDomainErrorCodes
     public const string ProjectReorderDuplicateId = "Portfolio3D:Projects:ReorderDuplicateId";
     public const string ProjectReorderDuplicateDisplayOrder = "Portfolio3D:Projects:ReorderDuplicateDisplayOrder";
     public const string ProjectReorderProjectNotFound = "Portfolio3D:Projects:ReorderProjectNotFound";
+
+    public const string SkillReorderItemsEmpty = "Portfolio3D:Skills:ReorderItemsEmpty";
+    public const string SkillReorderDuplicateId = "Portfolio3D:Skills:ReorderDuplicateId";
+    public const string SkillReorderDuplicateDisplayOrder = "Portfolio3D:Skills:ReorderDuplicateDisplayOrder";
+    public const string SkillReorderSkillNotFound = "Portfolio3D:Skills:ReorderSkillNotFound";
 }

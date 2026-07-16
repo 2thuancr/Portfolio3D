@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Portfolio3D.Projects;
+using Portfolio3D.Skills;
 using Shouldly;
 using Volo.Abp.Modularity;
 using Xunit;
@@ -12,11 +13,13 @@ public abstract class PublicPortfolioAppServiceTests<TStartupModule> : Portfolio
 {
     private readonly IPublicPortfolioAppService _publicPortfolioAppService;
     private readonly IProjectAppService _projectAppService;
+    private readonly ISkillAppService _skillAppService;
 
     protected PublicPortfolioAppServiceTests()
     {
         _publicPortfolioAppService = GetRequiredService<IPublicPortfolioAppService>();
         _projectAppService = GetRequiredService<IProjectAppService>();
+        _skillAppService = GetRequiredService<ISkillAppService>();
     }
 
     private static CreateProjectDto CreateValidInput(string slug, int displayOrder = 0, bool isFeatured = false)
@@ -37,6 +40,18 @@ public abstract class PublicPortfolioAppServiceTests<TStartupModule> : Portfolio
         var project = await _projectAppService.CreateAsync(CreateValidInput(slug, displayOrder, isFeatured));
         await _projectAppService.PublishAsync(project.Id);
         return project;
+    }
+
+    private async Task<SkillDto> CreateAndPublishSkillAsync(string name, string category, int displayOrder = 0)
+    {
+        var skill = await _skillAppService.CreateAsync(new CreateSkillDto
+        {
+            Name = name,
+            Category = category,
+            DisplayOrder = displayOrder
+        });
+        await _skillAppService.PublishAsync(skill.Id);
+        return skill;
     }
 
     [Fact]
@@ -101,5 +116,47 @@ public abstract class PublicPortfolioAppServiceTests<TStartupModule> : Portfolio
 
         result.FeaturedProjects.Count.ShouldBe(6);
         result.FeaturedProjects.ShouldNotContain(x => x.Slug == "aggregate-limit-6");
+    }
+
+    [Fact]
+    public async Task SkillGroups_Should_Only_Contain_Published_Skills()
+    {
+        await CreateAndPublishSkillAsync("Published Skill", "Backend");
+        await _skillAppService.CreateAsync(new CreateSkillDto
+        {
+            Name = "Unpublished Skill",
+            Category = "Backend"
+        });
+
+        var result = await _publicPortfolioAppService.GetAsync();
+
+        var names = result.SkillGroups.SelectMany(g => g.Items).Select(i => i.Name).ToList();
+        names.ShouldContain("Published Skill");
+        names.ShouldNotContain("Unpublished Skill");
+    }
+
+    [Fact]
+    public async Task SkillGroups_Should_Group_By_Category()
+    {
+        await CreateAndPublishSkillAsync(".NET", "Backend");
+        await CreateAndPublishSkillAsync("Angular", "Frontend");
+
+        var result = await _publicPortfolioAppService.GetAsync();
+
+        result.SkillGroups.ShouldContain(g => g.Category == "Backend" && g.Items.Any(i => i.Name == ".NET"));
+        result.SkillGroups.ShouldContain(g => g.Category == "Frontend" && g.Items.Any(i => i.Name == "Angular"));
+    }
+
+    [Fact]
+    public async Task SkillGroups_Items_Should_Be_Ordered_By_DisplayOrder()
+    {
+        await CreateAndPublishSkillAsync("Second", "Backend", 1);
+        await CreateAndPublishSkillAsync("First", "Backend", 0);
+
+        var result = await _publicPortfolioAppService.GetAsync();
+
+        var backendGroup = result.SkillGroups.Single(g => g.Category == "Backend");
+        var names = backendGroup.Items.Select(i => i.Name).ToList();
+        names.IndexOf("First").ShouldBeLessThan(names.IndexOf("Second"));
     }
 }

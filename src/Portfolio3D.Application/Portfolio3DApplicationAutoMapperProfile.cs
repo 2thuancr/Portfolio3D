@@ -1,5 +1,6 @@
 using AutoMapper;
 using Portfolio3D.Projects;
+using Portfolio3D.Skills;
 
 namespace Portfolio3D;
 
@@ -15,5 +16,7 @@ public class Portfolio3DApplicationAutoMapperProfile : Profile
         CreateMap<Project, ProjectListDto>();
         CreateMap<Project, ProjectPublicListDto>();
         CreateMap<Project, ProjectPublicDetailDto>();
+
+        CreateMap<Skill, SkillDto>();
     }
 }

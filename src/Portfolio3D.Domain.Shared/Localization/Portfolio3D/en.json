@@ -15,6 +15,16 @@
     "Exception:Portfolio3D:Projects:ReorderItemsEmpty": "Reorder items must not be empty.",
     "Exception:Portfolio3D:Projects:ReorderDuplicateId": "Reorder items must not contain duplicate project ids.",
     "Exception:Portfolio3D:Projects:ReorderDuplicateDisplayOrder": "Reorder items must not contain duplicate display orders.",
-    "Exception:Portfolio3D:Projects:ReorderProjectNotFound": "One or more projects in the reorder request do not exist."
+    "Exception:Portfolio3D:Projects:ReorderProjectNotFound": "One or more projects in the reorder request do not exist.",
+    "Permission:Skills": "Skills",
+    "Permission:Skills.Create": "Create",
+    "Permission:Skills.Update": "Update",
+    "Permission:Skills.Delete": "Delete",
+    "Permission:Skills.Publish": "Publish",
+    "Permission:Skills.Reorder": "Reorder",
+    "Exception:Portfolio3D:Skills:ReorderItemsEmpty": "Reorder items must not be empty.",
+    "Exception:Portfolio3D:Skills:ReorderDuplicateId": "Reorder items must not contain duplicate skill ids.",
+    "Exception:Portfolio3D:Skills:ReorderDuplicateDisplayOrder": "Reorder items must not contain duplicate display orders.",
+    "Exception:Portfolio3D:Skills:ReorderSkillNotFound": "One or more skills in the reorder request do not exist."
   }
 }
