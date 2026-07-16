@@ -12,6 +12,18 @@
     @case ('success') {
       @if (portfolio(); as data) {
         <app-hero-section [profile]="data.profile" />
+
+        <div class="portfolio-shell__scene-toggle">
+          <button type="button" class="btn btn--secondary" (click)="toggle3D()">
+            {{ is3DEnabled() ? 'Exit 3D' : 'Enter 3D' }}
+          </button>
+        </div>
+        @defer (when is3DEnabled(); prefetch on idle) {
+          <app-scene-canvas />
+        } @loading {
+          <p class="portfolio-shell__status" role="status">Loading 3D preview…</p>
+        }
+
         <app-about-section [profile]="data.profile" />
         <app-featured-projects-section [projects]="data.featuredProjects" />
         <app-skills-section [skillGroups]="data.skillGroups" />

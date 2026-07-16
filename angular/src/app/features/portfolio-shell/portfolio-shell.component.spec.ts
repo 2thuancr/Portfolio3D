@@ -128,4 +128,27 @@ describe('PortfolioShellComponent', () => {
 
     expect(apiSpy.get).toHaveBeenCalled();
   });
+
+  it('should toggle the 3D button label without removing 2D content', () => {
+    apiSpy.get.and.returnValue(of(fullPortfolio));
+
+    setup();
+
+    const toggleButton: HTMLButtonElement = fixture.nativeElement.querySelector('button');
+    expect(toggleButton.textContent).toContain('Enter 3D');
+
+    toggleButton.click();
+    fixture.detectChanges();
+
+    expect(toggleButton.textContent).toContain('Exit 3D');
+    const text = fixture.nativeElement.textContent as string;
+    expect(text).toContain('Vi Quoc Thuan');
+    expect(text).toContain('Vievent');
+    expect(text).toContain('.NET');
+
+    toggleButton.click();
+    fixture.detectChanges();
+
+    expect(toggleButton.textContent).toContain('Enter 3D');
+  });
 });

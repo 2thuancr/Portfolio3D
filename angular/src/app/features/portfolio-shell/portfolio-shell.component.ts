@@ -7,6 +7,7 @@ import { AboutSectionComponent } from './sections/about-section/about-section.co
 import { FeaturedProjectsSectionComponent } from './sections/featured-projects-section/featured-projects-section.component';
 import { SkillsSectionComponent } from './sections/skills-section/skills-section.component';
 import { ContactCtaSectionComponent } from './sections/contact-cta-section/contact-cta-section.component';
+import { SceneCanvasComponent } from '../../three/scene-canvas/scene-canvas.component';
 
 type PortfolioLoadState = 'loading' | 'success' | 'error';
 
@@ -19,6 +20,7 @@ type PortfolioLoadState = 'loading' | 'success' | 'error';
     FeaturedProjectsSectionComponent,
     SkillsSectionComponent,
     ContactCtaSectionComponent,
+    SceneCanvasComponent,
   ],
   templateUrl: './portfolio-shell.component.html',
   styleUrl: './portfolio-shell.component.scss',
@@ -31,6 +33,11 @@ export class PortfolioShellComponent implements OnInit {
 
   protected readonly state = signal<PortfolioLoadState>('loading');
   protected readonly portfolio = signal<PublicPortfolioDto | null>(null);
+  protected readonly is3DEnabled = signal(false);
+
+  protected toggle3D(): void {
+    this.is3DEnabled.update(enabled => !enabled);
+  }
 
   ngOnInit(): void {
     this.title.setTitle('Portfolio 3D');

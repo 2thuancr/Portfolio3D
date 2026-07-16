@@ -1,0 +1,9 @@
+<div class="scene-canvas">
+  <canvas #canvas class="scene-canvas__canvas" aria-hidden="true"></canvas>
+
+  @if (!webglAvailable()) {
+    <p class="scene-canvas__fallback" role="status">
+      3D preview isn't available in this browser. The rest of the portfolio still works normally.
+    </p>
+  }
+</div>
