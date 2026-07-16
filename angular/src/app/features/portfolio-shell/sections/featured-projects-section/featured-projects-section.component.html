@@ -7,9 +7,11 @@
     <ul class="projects__list">
       @for (project of projects(); track project.id) {
         <li class="projects__card">
-          <img class="projects__thumbnail" [src]="project.thumbnailUrl" [alt]="project.name" />
-          <h3>{{ project.name }}</h3>
-          <p>{{ project.summary }}</p>
+          <a [routerLink]="['/projects', project.slug]" class="projects__card-link">
+            <img class="projects__thumbnail" [src]="project.thumbnailUrl" [alt]="project.name" />
+            <h3>{{ project.name }}</h3>
+            <p>{{ project.summary }}</p>
+          </a>
         </li>
       }
     </ul>

@@ -25,6 +25,12 @@
     }
   }
 
+  &__card-link {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+  }
+
   &__thumbnail {
     width: 100%;
     height: 140px;

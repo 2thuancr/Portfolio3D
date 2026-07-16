@@ -11,6 +11,13 @@ export const APP_ROUTES: Routes = [
       ),
   },
   {
+    path: 'projects/:slug',
+    loadComponent: () =>
+      import('./features/project-detail/project-detail.component').then(
+        c => c.ProjectDetailComponent,
+      ),
+  },
+  {
     path: 'account',
     loadChildren: () => import('@abp/ng.account').then(c => c.createRoutes()),
   },

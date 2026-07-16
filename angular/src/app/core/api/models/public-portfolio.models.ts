@@ -8,6 +8,18 @@ export interface ProjectPublicListDto {
   displayOrder: number;
 }
 
+export interface ProjectPublicDetailDto {
+  id: string;
+  name: string;
+  slug: string;
+  summary: string;
+  description: string | null;
+  thumbnailUrl: string;
+  demoUrl: string | null;
+  repositoryUrl: string | null;
+  isFeatured: boolean;
+}
+
 export interface SkillPublicDto {
   name: string;
   iconUrl: string | null;

@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 import { of, throwError } from 'rxjs';
 import { PortfolioShellComponent } from './portfolio-shell.component';
 import { PublicPortfolioApiService } from '../../core/api/public-portfolio-api.service';
@@ -47,7 +48,10 @@ describe('PortfolioShellComponent', () => {
 
     TestBed.configureTestingModule({
       imports: [PortfolioShellComponent],
-      providers: [{ provide: PublicPortfolioApiService, useValue: apiSpy }],
+      providers: [
+        { provide: PublicPortfolioApiService, useValue: apiSpy },
+        provideRouter([]),
+      ],
     });
   });
 

@@ -1,0 +1,53 @@
+<main class="project-detail">
+  <a class="back-link" routerLink="/">← Back to portfolio</a>
+
+  @switch (state()) {
+    @case ('loading') {
+      <p class="project-detail__status" role="status">Loading project…</p>
+    }
+    @case ('error') {
+      <div class="project-detail__status" role="alert">
+        <p>We couldn't load this project right now.</p>
+        <button type="button" class="btn btn--primary" (click)="load()">Retry</button>
+      </div>
+    }
+    @case ('not-found') {
+      <div class="project-detail__status" role="alert">
+        <h1>Project not found</h1>
+        <p>This project doesn't exist or isn't published yet.</p>
+        <a class="btn btn--primary" routerLink="/">Back to portfolio</a>
+      </div>
+    }
+    @case ('success') {
+      @if (project(); as data) {
+        <article>
+          <header class="project-detail__hero">
+            <img [src]="data.thumbnailUrl" [alt]="data.name" class="project-detail__thumbnail" />
+            <h1>{{ data.name }}</h1>
+            <p class="project-detail__summary">{{ data.summary }}</p>
+
+            <div class="project-detail__links">
+              @if (data.demoUrl; as url) {
+                <a [href]="url" target="_blank" rel="noopener noreferrer" class="btn btn--primary">
+                  View Demo
+                </a>
+              }
+              @if (data.repositoryUrl; as url) {
+                <a [href]="url" target="_blank" rel="noopener noreferrer" class="btn btn--secondary">
+                  View Repository
+                </a>
+              }
+            </div>
+          </header>
+
+          @if (data.description) {
+            <section class="project-detail__description" aria-labelledby="description-heading">
+              <h2 id="description-heading">About this project</h2>
+              <p>{{ data.description }}</p>
+            </section>
+          }
+        </article>
+      }
+    }
+  }
+</main>

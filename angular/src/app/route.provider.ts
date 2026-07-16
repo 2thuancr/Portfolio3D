@@ -18,5 +18,11 @@ function configureRoutes() {
         layout: eLayoutType.empty,
         invisible: true,
       },
+      {
+        path: '/projects',
+        name: 'Projects',
+        layout: eLayoutType.empty,
+        invisible: true,
+      },
   ]);
 }

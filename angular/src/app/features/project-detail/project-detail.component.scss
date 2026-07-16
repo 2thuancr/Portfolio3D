@@ -1,0 +1,63 @@
+.project-detail {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 1.5rem;
+
+  &__status {
+    text-align: center;
+    padding: 4rem 1.5rem;
+    color: #4b5563;
+  }
+
+  &__hero {
+    text-align: center;
+    padding: 2rem 0;
+
+    h1 {
+      font-size: 2rem;
+      margin: 1rem 0 0.5rem;
+    }
+  }
+
+  &__thumbnail {
+    width: 100%;
+    max-height: 360px;
+    object-fit: cover;
+    border-radius: 0.5rem;
+  }
+
+  &__summary {
+    color: #4b5563;
+    font-size: 1.1rem;
+  }
+
+  &__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: center;
+    margin-top: 1.5rem;
+  }
+
+  &__description {
+    padding: 1.5rem 0;
+    color: #374151;
+  }
+}
+
+.back-link {
+  display: inline-block;
+  margin: 1rem 0;
+  color: #2563eb;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+@media (max-width: 640px) {
+  .project-detail {
+    padding: 1rem;
+  }
+}
