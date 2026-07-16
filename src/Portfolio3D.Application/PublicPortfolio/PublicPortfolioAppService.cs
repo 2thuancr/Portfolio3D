@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.Extensions.Options;
+using Portfolio3D.Profiles;
 using Portfolio3D.Projects;
 using Portfolio3D.Skills;
 using Volo.Abp.Domain.Repositories;
@@ -17,51 +17,58 @@ public class PublicPortfolioAppService : Portfolio3DAppService, IPublicPortfolio
 
     private readonly IRepository<Project, Guid> _projectRepository;
     private readonly IRepository<Skill, Guid> _skillRepository;
-    private readonly PortfolioProfileOptions _profileOptions;
+    private readonly IRepository<Profile, Guid> _profileRepository;
 
     public PublicPortfolioAppService(
         IRepository<Project, Guid> projectRepository,
         IRepository<Skill, Guid> skillRepository,
-        IOptions<PortfolioProfileOptions> profileOptions)
+        IRepository<Profile, Guid> profileRepository)
     {
         _projectRepository = projectRepository;
         _skillRepository = skillRepository;
-        _profileOptions = profileOptions.Value;
+        _profileRepository = profileRepository;
     }
 
     public virtual async Task<PublicPortfolioDto> GetAsync()
     {
         return new PublicPortfolioDto
         {
-            Profile = MapProfile(),
+            Profile = await GetProfileAsync(),
             FeaturedProjects = await GetFeaturedProjectsAsync(),
             SkillGroups = await GetSkillGroupsAsync()
         };
     }
 
-    private ProfilePublicDto? MapProfile()
+    private async Task<ProfilePublicDto?> GetProfileAsync()
     {
-        /* No Profile entity exists yet (Task 005 scope explicitly excludes
-         * Profile/Skill CRUD). Data is sourced from typed configuration
-         * (PortfolioProfileOptions) instead of being hard-coded here.
-         * If DisplayName isn't configured, Profile is intentionally null
-         * rather than returning an empty/fake object.
-         * TODO: replace with a Profile entity + repository read once that
-         * aggregate is implemented. */
-        if (string.IsNullOrWhiteSpace(_profileOptions.DisplayName))
+        var queryable = await _profileRepository.GetQueryableAsync();
+        var profile = await AsyncExecuter.FirstOrDefaultAsync(queryable);
+
+        if (profile == null)
         {
             return null;
         }
 
+        var socialLinks = SocialLinksJsonSerializer.Deserialize(profile.SocialLinksJson);
+
         return new ProfilePublicDto
         {
-            DisplayName = _profileOptions.DisplayName,
-            Headline = _profileOptions.Headline,
-            Bio = _profileOptions.Bio,
-            AvatarUrl = _profileOptions.AvatarUrl,
-            CvUrl = _profileOptions.CvUrl,
-            Email = _profileOptions.Email,
-            SocialLinks = _profileOptions.SocialLinks
+            DisplayName = profile.DisplayName,
+            Headline = profile.Headline,
+            Bio = profile.Bio,
+            AvatarUrl = profile.AvatarUrl,
+            CvUrl = profile.CvUrl,
+            Email = profile.Email,
+            SocialLinks = new[]
+                {
+                    socialLinks.GitHubUrl,
+                    socialLinks.LinkedInUrl,
+                    socialLinks.FacebookUrl,
+                    socialLinks.WebsiteUrl
+                }
+                .Where(url => !string.IsNullOrWhiteSpace(url))
+                .Select(url => url!)
+                .ToList()
         };
     }
 

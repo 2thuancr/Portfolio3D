@@ -25,6 +25,8 @@
     "Exception:Portfolio3D:Skills:ReorderItemsEmpty": "Reorder items must not be empty.",
     "Exception:Portfolio3D:Skills:ReorderDuplicateId": "Reorder items must not contain duplicate skill ids.",
     "Exception:Portfolio3D:Skills:ReorderDuplicateDisplayOrder": "Reorder items must not contain duplicate display orders.",
-    "Exception:Portfolio3D:Skills:ReorderSkillNotFound": "One or more skills in the reorder request do not exist."
+    "Exception:Portfolio3D:Skills:ReorderSkillNotFound": "One or more skills in the reorder request do not exist.",
+    "Permission:Profile": "Profile",
+    "Permission:Profile.Update": "Update"
   }
 }

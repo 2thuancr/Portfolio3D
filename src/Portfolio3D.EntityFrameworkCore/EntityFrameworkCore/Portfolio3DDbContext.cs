@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Portfolio3D.Profiles;
 using Portfolio3D.Projects;
 using Portfolio3D.Skills;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
@@ -31,6 +32,7 @@ public class Portfolio3DDbContext :
 
     public DbSet<Project> Projects { get; set; }
     public DbSet<Skill> Skills { get; set; }
+    public DbSet<Profile> Profiles { get; set; }
 
     #region Entities from the modules
 
@@ -114,6 +116,20 @@ public class Portfolio3DDbContext :
 
             b.HasIndex(x => new { x.IsPublished, x.DisplayOrder });
             b.HasIndex(x => x.Category);
+        });
+
+        builder.Entity<Profile>(b =>
+        {
+            b.ToTable(Portfolio3DConsts.DbTablePrefix + "Profiles", Portfolio3DConsts.DbSchema);
+            b.ConfigureByConvention(); //auto configure for the base class props
+
+            b.Property(x => x.DisplayName).IsRequired().HasMaxLength(ProfileConsts.MaxDisplayNameLength);
+            b.Property(x => x.Headline).IsRequired().HasMaxLength(ProfileConsts.MaxHeadlineLength);
+            b.Property(x => x.Bio).IsRequired().HasMaxLength(ProfileConsts.MaxBioLength);
+            b.Property(x => x.AvatarUrl).HasMaxLength(ProfileConsts.MaxUrlLength);
+            b.Property(x => x.CvUrl).HasMaxLength(ProfileConsts.MaxUrlLength);
+            b.Property(x => x.Email).HasMaxLength(ProfileConsts.MaxEmailLength);
+            b.Property(x => x.SocialLinksJson).HasMaxLength(ProfileConsts.MaxSocialLinksJsonLength);
         });
     }
 }

@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Portfolio3D.PublicPortfolio;
-using Volo.Abp.PermissionManagement;
+﻿using Volo.Abp.PermissionManagement;
 using Volo.Abp.SettingManagement;
 using Volo.Abp.Account;
 using Volo.Abp.Identity;
@@ -29,8 +27,5 @@ public class Portfolio3DApplicationModule : AbpModule
         {
             options.AddMaps<Portfolio3DApplicationModule>();
         });
-
-        var configuration = context.Services.GetConfiguration();
-        context.Services.Configure<PortfolioProfileOptions>(configuration.GetSection("PortfolioProfile"));
     }
 }

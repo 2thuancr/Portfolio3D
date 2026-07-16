@@ -1,8 +1,11 @@
+using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Portfolio3D.Profiles;
 using Portfolio3D.Projects;
 using Portfolio3D.Skills;
 using Shouldly;
+using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Modularity;
 using Xunit;
 
@@ -14,12 +17,16 @@ public abstract class PublicPortfolioAppServiceTests<TStartupModule> : Portfolio
     private readonly IPublicPortfolioAppService _publicPortfolioAppService;
     private readonly IProjectAppService _projectAppService;
     private readonly ISkillAppService _skillAppService;
+    private readonly IProfileAppService _profileAppService;
+    private readonly IRepository<Profile, Guid> _profileRepository;
 
     protected PublicPortfolioAppServiceTests()
     {
         _publicPortfolioAppService = GetRequiredService<IPublicPortfolioAppService>();
         _projectAppService = GetRequiredService<IProjectAppService>();
         _skillAppService = GetRequiredService<ISkillAppService>();
+        _profileAppService = GetRequiredService<IProfileAppService>();
+        _profileRepository = GetRequiredService<IRepository<Profile, Guid>>();
     }
 
     private static CreateProjectDto CreateValidInput(string slug, int displayOrder = 0, bool isFeatured = false)
@@ -63,8 +70,30 @@ public abstract class PublicPortfolioAppServiceTests<TStartupModule> : Portfolio
     }
 
     [Fact]
-    public async Task Profile_Should_Be_Null_When_Not_Configured()
+    public async Task Profile_Should_Be_Returned_From_Database()
     {
+        await _profileAppService.UpdateAsync(new UpdateProfileDto
+        {
+            DisplayName = "Jane Doe",
+            Headline = "Software Engineer",
+            Bio = "Building things on the web."
+        });
+
+        var result = await _publicPortfolioAppService.GetAsync();
+
+        result.Profile.ShouldNotBeNull();
+        result.Profile!.DisplayName.ShouldBe("Jane Doe");
+    }
+
+    [Fact]
+    public async Task Profile_Should_Be_Null_When_No_Profile_Exists_In_Database()
+    {
+        var existingProfiles = await _profileRepository.GetListAsync();
+        foreach (var profile in existingProfiles)
+        {
+            await _profileRepository.HardDeleteAsync(profile);
+        }
+
         var result = await _publicPortfolioAppService.GetAsync();
 
         result.Profile.ShouldBeNull();

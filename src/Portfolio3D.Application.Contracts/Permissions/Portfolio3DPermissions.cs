@@ -25,4 +25,11 @@ public static class Portfolio3DPermissions
         public const string Publish = Default + ".Publish";
         public const string Reorder = Default + ".Reorder";
     }
+
+    public static class Profile
+    {
+        public const string Default = GroupName + ".Profile";
+
+        public const string Update = Default + ".Update";
+    }
 }

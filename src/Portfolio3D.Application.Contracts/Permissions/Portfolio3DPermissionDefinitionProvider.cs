@@ -30,6 +30,12 @@ public class Portfolio3DPermissionDefinitionProvider : PermissionDefinitionProvi
         skillsPermission.AddChild(Portfolio3DPermissions.Skills.Delete, L("Permission:Skills.Delete"));
         skillsPermission.AddChild(Portfolio3DPermissions.Skills.Publish, L("Permission:Skills.Publish"));
         skillsPermission.AddChild(Portfolio3DPermissions.Skills.Reorder, L("Permission:Skills.Reorder"));
+
+        var profilePermission = myGroup.AddPermission(
+            Portfolio3DPermissions.Profile.Default,
+            L("Permission:Profile")
+        );
+        profilePermission.AddChild(Portfolio3DPermissions.Profile.Update, L("Permission:Profile.Update"));
     }
 
     private static LocalizableString L(string name)
