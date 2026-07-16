@@ -1,0 +1,108 @@
+{
+  "template": "app",
+  "imports": {
+    "Volo.Abp.LeptonXLiteTheme": {
+      "version": "4.3.4",
+      "isInstalled": true
+    },
+    "Volo.Abp.Account": {
+      "version": "9.3.4",
+      "isInstalled": true,
+      "creationTime": "07/16/2026 10:51:15 +00:00"
+    },
+    "Volo.Abp.OpenIddict": {
+      "version": "9.3.4",
+      "isInstalled": true,
+      "creationTime": "07/16/2026 10:51:15 +00:00"
+    },
+    "Volo.Abp.Identity": {
+      "version": "9.3.4",
+      "isInstalled": true,
+      "creationTime": "07/16/2026 10:51:15 +00:00"
+    },
+    "Volo.Abp.TenantManagement": {
+      "version": "9.3.4",
+      "isInstalled": true,
+      "creationTime": "07/16/2026 10:51:15 +00:00"
+    },
+    "Volo.Abp.SettingManagement": {
+      "version": "9.3.4",
+      "isInstalled": true,
+      "creationTime": "07/16/2026 10:51:15 +00:00"
+    },
+    "Volo.Abp.PermissionManagement": {
+      "version": "9.3.4",
+      "isInstalled": true,
+      "creationTime": "07/16/2026 10:51:15 +00:00"
+    },
+    "Volo.Abp.FeatureManagement": {
+      "version": "9.3.4",
+      "isInstalled": true,
+      "creationTime": "07/16/2026 10:51:15 +00:00"
+    }
+  },
+  "folders": {
+    "items": {
+      "src": {},
+      "test": {}
+    }
+  },
+  "packages": {
+    "Portfolio3D.Application": {
+      "path": "src/Portfolio3D.Application/Portfolio3D.Application.abppkg",
+      "folder": "src"
+    },
+    "Portfolio3D.Application.Tests": {
+      "path": "test/Portfolio3D.Application.Tests/Portfolio3D.Application.Tests.abppkg",
+      "folder": "test"
+    },
+    "Portfolio3D.Domain.Shared": {
+      "path": "src/Portfolio3D.Domain.Shared/Portfolio3D.Domain.Shared.abppkg",
+      "folder": "src"
+    },
+    "Portfolio3D.Application.Contracts": {
+      "path": "src/Portfolio3D.Application.Contracts/Portfolio3D.Application.Contracts.abppkg",
+      "folder": "src"
+    },
+    "Portfolio3D.HttpApi": {
+      "path": "src/Portfolio3D.HttpApi/Portfolio3D.HttpApi.abppkg",
+      "folder": "src"
+    },
+    "Portfolio3D.HttpApi.Client": {
+      "path": "src/Portfolio3D.HttpApi.Client/Portfolio3D.HttpApi.Client.abppkg",
+      "folder": "src"
+    },
+    "Portfolio3D.EntityFrameworkCore.Tests": {
+      "path": "test/Portfolio3D.EntityFrameworkCore.Tests/Portfolio3D.EntityFrameworkCore.Tests.abppkg",
+      "folder": "test"
+    },
+    "Portfolio3D.EntityFrameworkCore": {
+      "path": "src/Portfolio3D.EntityFrameworkCore/Portfolio3D.EntityFrameworkCore.abppkg",
+      "folder": "src"
+    },
+    "Portfolio3D.TestBase": {
+      "path": "test/Portfolio3D.TestBase/Portfolio3D.TestBase.abppkg",
+      "folder": "test"
+    },
+    "Portfolio3D.Domain.Tests": {
+      "path": "test/Portfolio3D.Domain.Tests/Portfolio3D.Domain.Tests.abppkg",
+      "folder": "test"
+    },
+    "Portfolio3D.HttpApi.Client.ConsoleTestApp": {
+      "path": "test/Portfolio3D.HttpApi.Client.ConsoleTestApp/Portfolio3D.HttpApi.Client.ConsoleTestApp.abppkg",
+      "folder": "test"
+    },
+    "Portfolio3D.DbMigrator": {
+      "path": "src/Portfolio3D.DbMigrator/Portfolio3D.DbMigrator.abppkg",
+      "folder": "src"
+    },
+    "Portfolio3D.HttpApi.Host": {
+      "path": "src/Portfolio3D.HttpApi.Host/Portfolio3D.HttpApi.Host.abppkg",
+      "folder": "src"
+    },
+    "Portfolio3D.Domain": {
+      "path": "src/Portfolio3D.Domain/Portfolio3D.Domain.abppkg",
+      "folder": "src"
+    }
+  }
+}
