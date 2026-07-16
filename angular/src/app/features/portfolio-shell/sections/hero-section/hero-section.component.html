@@ -1,0 +1,13 @@
+<section class="hero" aria-labelledby="hero-heading">
+  <h1 id="hero-heading">{{ displayName() }}</h1>
+  <p class="hero__headline">{{ headline() }}</p>
+  <p class="hero__bio">{{ bio() }}</p>
+
+  <div class="hero__actions">
+    <a class="btn btn--primary" href="#featured-projects">View Projects</a>
+    <a class="btn btn--secondary" href="#contact">Contact</a>
+    @if (cvUrl(); as url) {
+      <a class="btn btn--link" [href]="url" target="_blank" rel="noopener">Download CV</a>
+    }
+  </div>
+</section>

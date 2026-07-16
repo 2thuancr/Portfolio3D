@@ -5,7 +5,10 @@ export const APP_ROUTES: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    loadComponent: () => import('./home/home.component').then(c => c.HomeComponent),
+    loadComponent: () =>
+      import('./features/portfolio-shell/portfolio-shell.component').then(
+        c => c.PortfolioShellComponent,
+      ),
   },
   {
     path: 'account',

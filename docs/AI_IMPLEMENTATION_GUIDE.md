@@ -627,3 +627,16 @@ You must:
 - preserve readability
 
 Never rewrite large parts of the project without explicit instructions.
+
+---
+
+# 30. Database Change Workflow
+
+Whenever an entity or EF Core mapping changes:
+
+1. Create the migration.
+2. Build the solution.
+3. Run DbMigrator from:
+   src/Portfolio3D.DbMigrator
+4. Verify the schema in PostgreSQL.
+5. Never consider a migration task complete before applying it locally.

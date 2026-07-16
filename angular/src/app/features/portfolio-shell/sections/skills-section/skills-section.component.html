@@ -1,0 +1,26 @@
+<section class="skills" aria-labelledby="skills-heading">
+  <h2 id="skills-heading">Skills</h2>
+
+  @if (skillGroups().length === 0) {
+    <p class="skills__empty">Skills will be listed here soon.</p>
+  } @else {
+    @for (group of skillGroups(); track group.category) {
+      <div class="skills__group">
+        <h3>{{ group.category }}</h3>
+        <ul class="skills__items">
+          @for (skill of group.items; track skill.name) {
+            <li>
+              @if (skill.iconUrl; as icon) {
+                <img [src]="icon" [alt]="''" />
+              }
+              <span>{{ skill.name }}</span>
+              @if (skill.levelLabel; as level) {
+                <span class="skills__level">{{ level }}</span>
+              }
+            </li>
+          }
+        </ul>
+      </div>
+    }
+  }
+</section>

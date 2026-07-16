@@ -1,0 +1,17 @@
+<section id="featured-projects" class="projects" aria-labelledby="projects-heading">
+  <h2 id="projects-heading">Featured Projects</h2>
+
+  @if (projects().length === 0) {
+    <p class="projects__empty">No featured projects yet. Check back soon.</p>
+  } @else {
+    <ul class="projects__list">
+      @for (project of projects(); track project.id) {
+        <li class="projects__card">
+          <img class="projects__thumbnail" [src]="project.thumbnailUrl" [alt]="project.name" />
+          <h3>{{ project.name }}</h3>
+          <p>{{ project.summary }}</p>
+        </li>
+      }
+    </ul>
+  }
+</section>

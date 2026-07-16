@@ -1,0 +1,22 @@
+<main class="portfolio-shell">
+  @switch (state()) {
+    @case ('loading') {
+      <p class="portfolio-shell__status" role="status">Loading portfolio…</p>
+    }
+    @case ('error') {
+      <div class="portfolio-shell__status" role="alert">
+        <p>We couldn't load the portfolio right now.</p>
+        <button type="button" class="btn btn--primary" (click)="load()">Retry</button>
+      </div>
+    }
+    @case ('success') {
+      @if (portfolio(); as data) {
+        <app-hero-section [profile]="data.profile" />
+        <app-about-section [profile]="data.profile" />
+        <app-featured-projects-section [projects]="data.featuredProjects" />
+        <app-skills-section [skillGroups]="data.skillGroups" />
+        <app-contact-cta-section [profile]="data.profile" />
+      }
+    }
+  }
+</main>

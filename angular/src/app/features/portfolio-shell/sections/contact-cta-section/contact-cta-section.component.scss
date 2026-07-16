@@ -1,0 +1,10 @@
+.contact-cta {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem 4rem;
+  text-align: center;
+
+  &__fallback {
+    color: #6b7280;
+  }
+}

@@ -1,0 +1,11 @@
+<section id="contact" class="contact-cta" aria-labelledby="contact-heading">
+  <h2 id="contact-heading">Get in Touch</h2>
+
+  @if (email(); as address) {
+    <p>
+      <a [href]="'mailto:' + address">{{ address }}</a>
+    </p>
+  } @else {
+    <p class="contact-cta__fallback">Contact details will be available soon.</p>
+  }
+</section>
