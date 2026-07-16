@@ -4,5 +4,8 @@
   "private": true,
   "dependencies": {
   "@abp/aspnetcore.mvc.ui.theme.leptonxlite": "~4.3.4"
+  },
+  "resolutions": {
+    "select2": "4.1.0-rc.0"
   }
 }
