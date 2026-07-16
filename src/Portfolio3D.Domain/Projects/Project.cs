@@ -37,9 +37,9 @@ public class Project : FullAuditedAggregateRoot<Guid>
         SetSlug(slug);
         SetSummary(summary);
         SetThumbnailUrl(thumbnailUrl);
-        Description = description;
-        DemoUrl = demoUrl;
-        RepositoryUrl = repositoryUrl;
+        SetDescription(description);
+        SetDemoUrl(demoUrl);
+        SetRepositoryUrl(repositoryUrl);
         SetDisplayOrder(displayOrder);
         IsPublished = false;
         IsFeatured = false;
@@ -64,6 +64,26 @@ public class Project : FullAuditedAggregateRoot<Guid>
     public void SetThumbnailUrl(string thumbnailUrl)
     {
         ThumbnailUrl = Check.NotNullOrWhiteSpace(thumbnailUrl, nameof(thumbnailUrl), ProjectConsts.MaxUrlLength);
+    }
+
+    public void SetDescription(string? description)
+    {
+        Description = description;
+    }
+
+    public void SetDemoUrl(string? demoUrl)
+    {
+        DemoUrl = demoUrl;
+    }
+
+    public void SetRepositoryUrl(string? repositoryUrl)
+    {
+        RepositoryUrl = repositoryUrl;
+    }
+
+    public void SetFeatured(bool isFeatured)
+    {
+        IsFeatured = isFeatured;
     }
 
     public void SetDisplayOrder(int displayOrder)

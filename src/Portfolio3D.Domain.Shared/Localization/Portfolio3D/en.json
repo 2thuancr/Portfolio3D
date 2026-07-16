@@ -10,6 +10,11 @@
     "Permission:Projects.Update": "Update",
     "Permission:Projects.Delete": "Delete",
     "Permission:Projects.Publish": "Publish",
-    "Permission:Projects.Reorder": "Reorder"
+    "Permission:Projects.Reorder": "Reorder",
+    "Exception:Portfolio3D:Projects:SlugAlreadyExists": "A project with slug '{Slug}' already exists.",
+    "Exception:Portfolio3D:Projects:ReorderItemsEmpty": "Reorder items must not be empty.",
+    "Exception:Portfolio3D:Projects:ReorderDuplicateId": "Reorder items must not contain duplicate project ids.",
+    "Exception:Portfolio3D:Projects:ReorderDuplicateDisplayOrder": "Reorder items must not contain duplicate display orders.",
+    "Exception:Portfolio3D:Projects:ReorderProjectNotFound": "One or more projects in the reorder request do not exist."
   }
 }
