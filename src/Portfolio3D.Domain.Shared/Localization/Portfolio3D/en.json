@@ -4,6 +4,12 @@
     "AppName": "Portfolio3D",
     "Menu:Home": "Home",
     "LongWelcomeMessage": "Welcome to the application. This is a startup project based on the ABP framework. For more information visit",
-    "Welcome": "Welcome"
+    "Welcome": "Welcome",
+    "Permission:Projects": "Projects",
+    "Permission:Projects.Create": "Create",
+    "Permission:Projects.Update": "Update",
+    "Permission:Projects.Delete": "Delete",
+    "Permission:Projects.Publish": "Publish",
+    "Permission:Projects.Reorder": "Reorder"
   }
 }
