@@ -19,7 +19,7 @@
           </button>
         </div>
         @defer (when is3DEnabled(); prefetch on idle) {
-          <app-scene-canvas />
+          <app-scene-canvas (closeRequested)="is3DEnabled.set(false)" />
         } @loading {
           <p class="portfolio-shell__status" role="status">Loading 3D preview…</p>
         }

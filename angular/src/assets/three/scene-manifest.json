@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "modelUrl": "/assets/three/models/developer-room-placeholder.glb",
+  "modelScale": [1, 1, 1],
+  "modelPosition": [0, 0, 0],
+  "modelRotation": [0, 0, 0],
+  "interactiveObjects": [],
+  "cameraTargets": {
+    "main": {
+      "position": [0, 2.5, 6],
+      "lookAt": [0, 1, 0]
+    }
+  }
+}

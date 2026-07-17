@@ -1,9 +1,34 @@
 <div class="scene-canvas">
   <canvas #canvas class="scene-canvas__canvas" aria-hidden="true"></canvas>
 
-  @if (!webglAvailable()) {
-    <p class="scene-canvas__fallback" role="status">
-      3D preview isn't available in this browser. The rest of the portfolio still works normally.
-    </p>
+  @switch (state()) {
+    @case ('loading-manifest') {
+      <div class="scene-canvas__overlay" role="status">
+        <p>Loading 3D scene…</p>
+      </div>
+    }
+    @case ('loading-model') {
+      <div class="scene-canvas__overlay" role="status">
+        <p>Loading 3D scene… {{ progress() }}%</p>
+      </div>
+    }
+    @case ('fallback') {
+      <div class="scene-canvas__overlay scene-canvas__overlay--message" role="status">
+        <p>{{ message() }}</p>
+        <div class="scene-canvas__actions">
+          <button type="button" class="btn btn--secondary" (click)="retry()">Retry</button>
+          <button type="button" class="btn btn--primary" (click)="continueIn2D()">Continue in 2D</button>
+        </div>
+      </div>
+    }
+    @case ('error') {
+      <div class="scene-canvas__overlay scene-canvas__overlay--message" role="alert">
+        <p>{{ message() || "3D preview isn't available right now." }}</p>
+        <div class="scene-canvas__actions">
+          <button type="button" class="btn btn--secondary" (click)="retry()">Retry</button>
+          <button type="button" class="btn btn--primary" (click)="continueIn2D()">Continue in 2D</button>
+        </div>
+      </div>
+    }
   }
 </div>

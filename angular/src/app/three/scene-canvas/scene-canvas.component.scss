@@ -14,14 +14,23 @@
     height: 100%;
   }
 
-  &__fallback {
+  &__overlay {
     position: absolute;
     inset: 0;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: 1rem;
     padding: 1.5rem;
     text-align: center;
     color: #e5e7eb;
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: center;
   }
 }

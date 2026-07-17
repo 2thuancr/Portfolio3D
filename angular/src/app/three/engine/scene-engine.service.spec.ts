@@ -60,4 +60,60 @@ describe('SceneEngineService', () => {
     disposeSpies.forEach(spy => expect(spy).toHaveBeenCalled());
     expect(service.isInitialized).toBeFalse();
   });
+
+  it('should throw when adding a model before init', () => {
+    const model = new THREE.Group();
+
+    expect(() => service.addModel(model)).toThrowError();
+  });
+
+  it('should add a model to the scene, apply its transform, and set hasModel', () => {
+    service.init(1);
+    const model = new THREE.Group();
+
+    service.addModel(model, { position: [1, 2, 3], rotation: [0, Math.PI / 2, 0], scale: [2, 2, 2] });
+
+    expect(service.hasModel).toBeTrue();
+    expect(service.scene.children).toContain(model);
+    expect(model.position.toArray()).toEqual([1, 2, 3]);
+    expect(model.scale.toArray()).toEqual([2, 2, 2]);
+  });
+
+  it('should dispose and remove the previous model when a new one is added', () => {
+    service.init(1);
+    const firstModel = new THREE.Group();
+    service.addModel(firstModel);
+
+    const secondModel = new THREE.Group();
+    service.addModel(secondModel);
+
+    expect(service.scene.children).not.toContain(firstModel);
+    expect(service.scene.children).toContain(secondModel);
+    expect(service.hasModel).toBeTrue();
+  });
+
+  it('should remove and dispose the model, resetting hasModel to false', () => {
+    service.init(1);
+    const model = new THREE.Group();
+    service.addModel(model);
+
+    service.removeModel();
+
+    expect(service.hasModel).toBeFalse();
+    expect(service.scene.children).not.toContain(model);
+  });
+
+  it('should toggle placeholder desk visibility without disposing it', () => {
+    service.init(1);
+    const desk = service.scene.children.find(
+      (child): child is THREE.Mesh => child instanceof THREE.Mesh && child.position.y === 0.5,
+    );
+    expect(desk).toBeDefined();
+
+    service.setPlaceholderVisible(false);
+    expect(desk!.visible).toBeFalse();
+
+    service.setPlaceholderVisible(true);
+    expect(desk!.visible).toBeTrue();
+  });
 });
